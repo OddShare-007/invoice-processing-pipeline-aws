@@ -1,0 +1,1 @@
+{"source": {"bucket": "shubh-invoices-raw", "key": "sample.pdf"}, "vendor_name": "Acme Supplies", "invoice_date": "2026-09-01", "total_amount": "245.00", "tax_amount": "20.00", "line_items": [{"description": "Office chairs", "quantity": "2", "price": "100.00"}]}

@@ -46,3 +46,57 @@ Built entirely within AWS Free Tier limits:
 
 ## Status
 Core pipeline built and deployed via both manual setup and Terraform. Currently pending AWS account-level Textract service activation before end-to-end testing can be completed.
+
+## Current Status & Validation
+
+The core serverless pipeline has been implemented and deployed using AWS S3, Lambda, Textract, Athena, Terraform, and GitHub Actions.
+
+### Successfully Implemented
+
+* S3 raw and processed buckets
+* S3 → Lambda event trigger
+* Lambda invoice-processing logic
+* IAM least-privilege permissions
+* Terraform infrastructure
+* GitHub Actions CI/CD
+* CloudWatch logging and monitoring
+* Processed JSON structure for downstream Athena analysis
+
+### Current Limitation
+
+The AWS account is currently on the Free account plan, and Amazon Textract is returning:
+
+```text
+SubscriptionRequiredException:
+The AWS Access Key Id needs a subscription for the service
+```
+
+Lambda successfully reaches the Textract `AnalyzeExpense` API, but the AWS account currently does not have the required service access to complete the request.
+
+This is an AWS account-level service-access limitation and not a Lambda code or S3 trigger failure.
+
+Until Textract access is available, the downstream S3 processed-data and Athena components can be validated using a sample structured JSON file.
+
+### End-to-End Target Flow
+
+```text
+Invoice / Receipt
+       ↓
+S3 Raw Bucket
+       ↓
+AWS Lambda
+       ↓
+Amazon Textract
+       ↓
+Structured JSON
+       ↓
+S3 Processed Bucket
+       ↓
+Amazon Athena
+       ↓
+SQL Invoice Analytics
+```
+
+**Project Status: Core implementation complete — Textract account access pending.** Once Textract access is granted, the pipeline can be fully validated with end-to-end testing.
+
+c:\Projects\invoice-processing-pipeline-aws\Screenshot 2026-09-15 205545.png
